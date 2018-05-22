@@ -19,9 +19,15 @@ public class AddServlet extends HttpServlet {
         String bufStr = new String(buf, StandardCharsets.UTF_8);
 
 		Message msg = Message.fromJSON(bufStr);
-		if (msg != null)
-			msgList.add(msg);
-		else
+		if (msg != null) {
+		    if (msg.getTo() == null) {
+                msgList.add(msg);
+            } else {
+		        PrivateMessageList privateMessageList = UsersOnline.getUsersOnline().get(msg.getTo());
+		        if (privateMessageList != null) privateMessageList.addPrivateMessage(msg);
+            }
+        }
+        else
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 	}
 

@@ -1,5 +1,7 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class JsonMessages {
@@ -12,6 +14,13 @@ public class JsonMessages {
     }
 
     public List<Message> getList() {
-        return Collections.unmodifiableList(list);
+        return this.list;
+        //return Collections.unmodifiableList(list);
+    }
+
+    public synchronized String toJSON() {
+        if (this.list.size() == 0) return null;
+        Gson gson = new GsonBuilder().create();
+        return gson.toJson(this.list);
     }
 }

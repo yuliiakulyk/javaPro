@@ -23,6 +23,11 @@ public class MessageList {
 	public synchronized void add(Message m) {
 		list.add(m);
 	}
+
+	public synchronized JsonMessages getMessages(int from) {
+		//if (from == list.size()) return null;
+		return new JsonMessages(list, from);
+	}
 	
 	public synchronized String toJSON(int n) {
 		if (n == list.size()) return null;

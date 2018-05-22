@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 public class GetThread implements Runnable {
     private final Gson gson;
     private int n;
+    private int m;
 
     public GetThread() {
         gson = new GsonBuilder().create();
@@ -20,26 +21,28 @@ public class GetThread implements Runnable {
     public void run() {
         try {
             while ( ! Thread.interrupted()) {
-                URL url = new URL(Utils.getURL() + "/get?from=" + n);
+                URL url = new URL(Utils.getURL() + "/get?from=" + n + "&privateFrom=" + this.m + "&userName="+ Main.userName);
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
                 InputStream is = http.getInputStream();
                 try {
                     byte[] buf = requestBodyToArray(is);
                     String strBuf = new String(buf, StandardCharsets.UTF_8);
-
                     JsonMessages list = gson.fromJson(strBuf, JsonMessages.class);
                     if (list != null) {
-                        for (Message m : list.getList()) {
-                            System.out.println(m);
-                            n++;
+                        for (Message message : list.getList()) {
+                            System.out.println(message);
+                            if (message.getTo() == null) {
+                                n++;
+                            } else {
+                                m++;
+                            }
                         }
                     }
                 } finally {
                     is.close();
                 }
-
-                Thread.sleep(500);
+                Thread.sleep(1000);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
