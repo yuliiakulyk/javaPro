@@ -9,7 +9,7 @@ import java.util.List;
 public class Client {
     @Id
     @GeneratedValue
-    private Long id;
+    protected Long id;
 
     private String name;
     private Integer age;
