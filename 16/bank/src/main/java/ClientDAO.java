@@ -26,4 +26,5 @@ public class ClientDAO {
         return query.getResultList();
     }
 
+
 }

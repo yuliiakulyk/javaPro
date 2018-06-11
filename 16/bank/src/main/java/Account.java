@@ -20,8 +20,7 @@ public class Account {
     @OneToMany(mappedBy = "toAccount")
     private List<Transaction> transactionsIn;
 
-    public Account(Client client, String currency, Double balance, List<Transaction> transactionsOut, List<Transaction> transactionsIn) {
-        this.client = client;
+    public Account(String currency, Double balance, List<Transaction> transactionsOut, List<Transaction> transactionsIn) {
         this.currency = currency;
         this.balance = balance;
         this.transactionsOut = transactionsOut;

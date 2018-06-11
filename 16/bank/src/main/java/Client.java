@@ -16,10 +16,9 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Account> accounts = new ArrayList<>();
 
-    public Client(String name, String surname, List<Account> accounts) {
+    public Client(String name, String surname) {
         this.name = name;
         this.surname = surname;
-        this.accounts = accounts;
     }
 
     public Client() {
